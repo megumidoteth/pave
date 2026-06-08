@@ -3,7 +3,7 @@ import { useState, useEffect } from "react";
 import { ethers } from "ethers";
 import axios from "axios";
 
-const API_URL = "http://localhost:3001";
+const API_URL = "https://pave-production-0cd8.up.railway.app";
 
 const PAYMENT_PROCESSOR_ADDRESS = "0x911EbE92393aEa9509FD6C47e015da95e3562B65";
 const USDC_ADDRESS = "0x3600000000000000000000000000000000000000";

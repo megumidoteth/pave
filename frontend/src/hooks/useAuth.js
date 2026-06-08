@@ -2,7 +2,7 @@ import { useAccount, useSignMessage } from "wagmi";
 import { useState, useEffect } from "react";
 import axios from "axios";
 
-const API_URL = "http://localhost:3001";
+const API_URL = "https://pave-production-0cd8.up.railway.app";
 
 export function useAuth() {
   const { address, isConnected } = useAccount();

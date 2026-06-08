@@ -5,7 +5,7 @@ import { useState } from "react";
 import { ethers } from "ethers";
 import axios from "axios";
 
-const API_URL = "http://localhost:3001";
+const API_URL = "https://pave-production-0cd8.up.railway.app";
 
 const INVOICE_REGISTRY_ADDRESS = "0xE3eBd4242b023e1DfdC931D82e57a9036D344d7c";
 const INVOICE_REGISTRY_ABI = [
