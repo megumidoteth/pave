@@ -46,13 +46,41 @@ export default function PayInvoice() {
   };
 
   const connectWallet = async () => {
-    if (!window.ethereum) {
-      setError("Please install MetaMask to pay this invoice");
-      return;
+  if (!window.ethereum) {
+    setError("Please install MetaMask to pay this invoice");
+    return;
+  }
+
+  const accounts = await window.ethereum.request({ method: "eth_requestAccounts" });
+  setWalletAddress(accounts[0]);
+
+  // Switch to Arc testnet automatically
+  try {
+    await window.ethereum.request({
+      method: "wallet_switchEthereumChain",
+      params: [{ chainId: "0x4CE052" }], // 5042002 in hex
+    });
+  } catch (switchError) {
+    // Chain not added yet — add it automatically
+    if (switchError.code === 4902) {
+      try {
+        await window.ethereum.request({
+          method: "wallet_addEthereumChain",
+          params: [{
+            chainId: "0x4CE052",
+            chainName: "Arc Network Testnet",
+            nativeCurrency: { name: "USD Coin", symbol: "USDC", decimals: 18 },
+            rpcUrls: ["https://rpc.testnet.arc.network"],
+            blockExplorerUrls: ["https://testnet.arcscan.app"],
+          }],
+        });
+      } catch (addError) {
+        setError("Please switch to Arc Network Testnet in MetaMask");
+        return;
+      }
     }
-    const accounts = await window.ethereum.request({ method: "eth_requestAccounts" });
-    setWalletAddress(accounts[0]);
-  };
+  }
+};
 
   const handlePay = async () => {
     if (!walletAddress) {
